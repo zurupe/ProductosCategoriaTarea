@@ -1,4 +1,4 @@
-package client;
+package com.example.products.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author zurupe
  */
 
-@FeignClient(name = "category", url = "c-app-categories:8003")
+@FeignClient(name = "c-app-categoria", url = "c-app-categoria:8003")
 public interface CategoryClient{
     @GetMapping("/api/categories/{id}")
     CategoryDTO getCategory(@PathVariable("id") Long id);

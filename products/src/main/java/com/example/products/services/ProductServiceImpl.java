@@ -1,6 +1,6 @@
 package com.example.products.services;
-import client.CategoryClient;
-import client.CategoryDTO;
+import com.example.products.client.CategoryClient;
+import com.example.products.client.CategoryDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
