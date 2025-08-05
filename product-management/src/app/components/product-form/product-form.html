@@ -1,1 +1,40 @@
-<p>product-form works!</p>
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">{{ isEditMode ? 'Editar Producto' : 'Crear Producto' }}</h2>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
+      <input id="name" formControlName="name" class="w-full p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" [ngClass]="{'border-red-500': productForm.get('name')?.invalid && productForm.get('name')?.touched}">
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="text-red-500 text-sm mt-1">
+        El nombre es requerido y debe tener al menos 3 caracteres.
+      </div>
+    </div>
+    <div>
+      <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+      <textarea id="description" formControlName="description" class="w-full p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" [ngClass]="{'border-red-500': productForm.get('description')?.invalid && productForm.get('description')?.touched}"></textarea>
+      <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="text-red-500 text-sm mt-1">
+        La descripción es requerida y debe tener al menos 3 caracteres.
+      </div>
+    </div>
+    <div>
+      <label for="price" class="block text-sm font-medium text-gray-700">Precio</label>
+      <input id="price" type="number" step="0.01" formControlName="price" class="w-full p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" [ngClass]="{'border-red-500': productForm.get('price')?.invalid && productForm.get('price')?.touched}">
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="text-red-500 text-sm mt-1">
+        El precio es requerido y debe ser mayor o igual a 0.01.
+      </div>
+    </div>
+    <div>
+      <label for="categoryId" class="block text-sm font-medium text-gray-700">Categoría</label>
+      <select id="categoryId" formControlName="categoryId" class="w-full p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500" [ngClass]="{'border-red-500': productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched}">
+        <option value="">Selecciona una categoría</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      </select>
+      <div *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched" class="text-red-500 text-sm mt-1">
+        La categoría es requerida.
+      </div>
+    </div>
+    <div class="flex space-x-4">
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" [disabled]="productForm.invalid">Guardar</button>
+      <a routerLink="/products" class="text-gray-500 px-4 py-2">Cancelar</a>
+    </div>
+  </form>
+</div>
