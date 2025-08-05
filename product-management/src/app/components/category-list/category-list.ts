@@ -8,8 +8,8 @@ import { Category } from '../../models/category';
   selector: 'app-category-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css']
+  templateUrl: './category-list.html',
+  styleUrls: ['./category-list.css']
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];

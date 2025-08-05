@@ -9,8 +9,8 @@ import { Category } from '../../models/category';
   selector: 'app-category-form',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './category-form.component.html',
-  styleUrls: ['./category-form.component.css']
+  templateUrl: './category-form.html',
+  styleUrls: ['./category-form.css']
 })
 export class CategoryFormComponent implements OnInit {
   categoryForm: FormGroup;

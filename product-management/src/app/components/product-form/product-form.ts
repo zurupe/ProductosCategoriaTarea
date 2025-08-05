@@ -11,8 +11,8 @@ import { Category } from '../../models/category';
   selector: 'app-product-form',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.css']
+  templateUrl: './product-form.html',
+  styleUrls: ['./product-form.css']
 })
 export class ProductFormComponent implements OnInit {
   productForm: FormGroup;

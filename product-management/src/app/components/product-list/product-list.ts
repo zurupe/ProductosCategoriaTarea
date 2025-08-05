@@ -8,8 +8,8 @@ import { Product } from '../../models/product';
   selector: 'app-product-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  templateUrl: './product-list.html',
+  styleUrls: ['./product-list.css']
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
