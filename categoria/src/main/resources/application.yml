@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9000 # URL del servidor de autorización (Auth Server)
+
+      client:
+        registration:
+          category:
+            provider: oauth-server
+            client-id: category
+            client-secret: secret12345
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8003/authorized"
+            client-name: category
+            scope: openid,profile,read,write
+
+        provider:
+          oauth-server:
+            issuer-uri: http://127.0.0.1:9000
