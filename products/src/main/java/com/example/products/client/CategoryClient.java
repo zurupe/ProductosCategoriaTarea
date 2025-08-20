@@ -1,21 +1,16 @@
 package com.example.products.client;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+@FeignClient(name = "category-service", url = "${CATEGORIES_SERVICE_URL:http://localhost:8003}")
+public interface CategoryClient {
+    @GetMapping("/api/categoria")
+    List<CategoryDTO> getAllCategories();
 
-/**
- *
- * @author zurupe
- */
-
-@FeignClient(name = "c-app-categoria", url = "c-app-categoria:8003")
-public interface CategoryClient{
-    @GetMapping("/api/categories/{id}")
-    CategoryDTO getCategory(@PathVariable("id") Long id);
+    @GetMapping("/api/categoria/{id}")
+    CategoryDTO getCategoryById(@PathVariable("id") Long id);
 }

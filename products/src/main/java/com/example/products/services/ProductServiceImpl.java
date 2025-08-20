@@ -1,57 +1,63 @@
 package com.example.products.services;
-import com.example.products.client.CategoryClient;
-import com.example.products.client.CategoryDTO;
-import java.util.List;
+
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.example.products.models.entities.Product;
-import com.example.products.repositories.IProductRepository;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.products.repositories.ProductRepository;
+import com.example.products.client.CategoryClient;
+import com.example.products.client.CategoryDTO;
+
 @Service
-@Transactional
-public class ProductServiceImpl implements IProductService {
-    private final IProductRepository productRepository;
+@jakarta.transaction.Transactional
+public class ProductServiceImpl implements ProductService {
+    private final ProductRepository productRepository;
     private final CategoryClient categoryClient;
-    public ProductServiceImpl(IProductRepository productRepository, CategoryClient categoryClient) {
+
+    public ProductServiceImpl(ProductRepository productRepository, CategoryClient categoryClient) {
         this.productRepository = productRepository;
         this.categoryClient = categoryClient;
     }
-@Override
-public List<Product> getAllProducts() {
-return (List<Product>) productRepository.findAll();
-}
-@Override
-public Optional<Product> getProductById(Long id) {
-return productRepository.findById(id);
-}
-@Override
-public Product createProduct(Product product) {
-    if(product.getCategoryId() != null){
-        CategoryDTO category = categoryClient.getCategory(product.getCategoryId());
-        if(category != null){
-            product.setCategoryId(category.getId());
-        } else{
-            throw new IllegalArgumentException("Category with id" + product.getCategoryId()+"does not exist.");
-        }
-    
+
+    @Override
+    public Iterable<Product> getAllProducts() {
+        return productRepository.findAll();
     }
-    return productRepository.save(product);
-}
-@Override
-public Product updateProduct(Long id, Product product) {
-if(!productRepository.findById(id).isPresent()) {
-throw new IllegalArgumentException("Product with id " + id 
-+ " does not exist.");
-}
-product.setId(id);
-return productRepository.save(product);
-}
-@Override
-public void deleteProduct(Long id) {
-if(!productRepository.findById(id).isPresent()) {
-throw new IllegalArgumentException("Product with id " + id 
-+ " does not exist.");
-}
-productRepository.deleteById(id);
-} 
+
+    @Override
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        // Validar que la categoría exista usando Feign Client
+        CategoryDTO category = null;
+        try {
+            category = categoryClient.getCategoryById(product.getCategoryId());
+        } catch (Exception e) {
+            throw new IllegalArgumentException(
+                    "La categoría con id " + product.getCategoryId() + " no existe o no se pudo consultar.");
+        }
+        if (category == null || category.getId() == null) {
+            throw new IllegalArgumentException("La categoría con id " + product.getCategoryId() + " no existe.");
+        }
+        return productRepository.save(product);
+    }
+
+    @Override
+    public void updateProduct(Long id, Product product) {
+        if (!productRepository.existsById(id)) {
+            throw new IllegalArgumentException("Product with id " + id + " does not exist.");
+        }
+        product.setId(id);
+        productRepository.save(product);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new IllegalArgumentException("Product with id " + id + " does not exist.");
+        }
+        productRepository.deleteById(id);
+    }
 }

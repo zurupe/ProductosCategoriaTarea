@@ -1,16 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.products.client;
 
-/**
- *
- * @author zurupe
- */
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CategoryDTO {
     private Long id;
+    
+    @JsonProperty("nombre")
     private String name;
+    
+    @JsonProperty("descripcion")
+    private String description;
+    
+    @JsonProperty("fechaCreacion")
+    private String fechaCreacion;
 
     public CategoryDTO() {
     }
@@ -36,5 +38,19 @@ public class CategoryDTO {
         this.name = name;
     }
     
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     
+    public String getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(String fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 }
